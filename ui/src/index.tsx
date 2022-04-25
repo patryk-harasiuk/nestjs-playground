@@ -1,7 +1,10 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
-  <React.StrictMode>'hello world'</React.StrictMode>,
-  document.getElementById("root")
-);
+const container = document.getElementById("root");
+
+if (!container) throw new Error("Failed to find the root element");
+
+const root = createRoot(container);
+
+root.render(<React.StrictMode>'hello world'</React.StrictMode>);
