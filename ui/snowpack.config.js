@@ -13,9 +13,17 @@ module.exports = {
     /* ... */
   },
   devOptions: {
-    /* ... */
+    port: 3000,
   },
   buildOptions: {
     /* ... */
+  },
+  packageOptions: {
+    knownEntrypoints: [
+      'framesync',
+      '@chakra-ui/hooks/use-animation-state',
+      '@chakra-ui/hooks/use-animation-state',
+      '@chakra-ui/hooks',
+    ],
   },
 };

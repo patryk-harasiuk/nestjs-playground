@@ -7,5 +7,7 @@
     "strict": true,
     "skipLibCheck": true,
     "types": ["react/next", "react-dom/next"]
-  }
+  },
+  "include": ["src", "tsconfig.paths.json"],
+  "extends": "./tsconfig.paths.json"
 }

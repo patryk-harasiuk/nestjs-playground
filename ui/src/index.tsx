@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import App from './App';
 
@@ -11,6 +12,8 @@ const root = ReactDOMClient.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
   </React.StrictMode>
 );

@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "snowpack dev",
-    "build": "snowpack build"
+    "build": "snowpack build",
+    "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
+    "format": "npm run prettier -- --write"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,7 @@
     "@snowpack/plugin-typescript": "^1.2.1",
     "@types/react": "^18.0.7",
     "@types/react-dom": "^18.0.0",
+    "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
