@@ -35,12 +35,15 @@
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.8.8",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hook-form": "^7.30.0",
     "react-query": "^3.38.0",
     "react-query-auth": "^1.1.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "yup": "^0.32.11"
   }
 }
