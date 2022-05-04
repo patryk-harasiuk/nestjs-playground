@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  parserOptions: { ecmaVersion: 8, sourceType: 'module' },
+  // parserOptions: { ecmaVersion: 8, sourceType: 'module' },
   ignorePatterns: ['node_modules/*'],
   extends: ['eslint:recommended'],
   overrides: [
@@ -56,9 +56,6 @@ module.exports = {
         'import/default': 'off',
         'import/no-named-as-default-member': 'off',
         'import/no-named-as-default': 'off',
-
-        'react/react-in-jsx-scope': 'off',
-
         'jsx-a11y/anchor-is-valid': 'off',
 
         '@typescript-eslint/no-unused-vars': ['error'],

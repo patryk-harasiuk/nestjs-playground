@@ -23,7 +23,10 @@ export const InputField = ({
 }: InputFieldProps) => {
   return (
     <FieldWrapper label={label} error={error}>
-      <Controller {...registration} render={({ field }) => <Input {...field} />} />
+      <Controller
+        {...registration}
+        render={({ field }) => <Input type={type} placeholder={placeholder} {...field} />}
+      />
     </FieldWrapper>
   );
 };

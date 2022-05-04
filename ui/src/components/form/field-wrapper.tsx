@@ -1,4 +1,5 @@
 import { FieldError } from 'react-hook-form';
+import { FormControl, FormLabel, InputGroup, Box } from '@chakra-ui/react';
 
 interface FieldWrapperProps {
   children: React.ReactNode;
@@ -8,12 +9,12 @@ interface FieldWrapperProps {
 
 export const FieldWrapper = ({ children, label, error }: FieldWrapperProps) => {
   return (
-    <div>
-      <label>
+    <FormControl>
+      <FormLabel>
         {label}
-        <div>{children}</div>
-      </label>
-      {error?.message && <div role="alert">{error.message}</div>}
-    </div>
+        <InputGroup>{children}</InputGroup>
+      </FormLabel>
+      {error?.message && <Box role="alert">{error.message}</Box>}
+    </FormControl>
   );
 };

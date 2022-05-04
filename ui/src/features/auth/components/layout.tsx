@@ -14,7 +14,7 @@ interface LayoutProps {
   title?: string;
   subtitle?: string;
   action: 'Sign up' | 'Log in';
-  children?: string;
+  children?: React.ReactNode;
 }
 
 export const Layout = ({ title, subtitle, action, children }: LayoutProps) => {
@@ -37,6 +37,7 @@ export const Layout = ({ title, subtitle, action, children }: LayoutProps) => {
           bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
           borderRadius={{ base: 'none', sm: 'xl' }}
         ></Box>
+        {children}
       </Stack>
     </Container>
   );
