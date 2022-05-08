@@ -1,8 +1,9 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
+
 module.exports = {
   mount: {
-    public: { url: '/', static: true },
-    src: { url: '/dist' },
+    public: { url: '/', resolve: true },
+    src: '/dist',
   },
   plugins: [
     '@snowpack/plugin-react-refresh',
@@ -15,8 +16,16 @@ module.exports = {
   },
   buildOptions: {
     jsxInject: `import React from "react"`,
+    baseUrl: '/',
   },
   packageOptions: {
     knownEntrypoints: ['framesync', '@chakra-ui/hooks/use-animation-state', '@chakra-ui/hooks'],
   },
+  routes: [
+    {
+      match: 'routes',
+      src: '.*',
+      dest: '/index.html',
+    },
+  ],
 };
