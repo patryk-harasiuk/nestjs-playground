@@ -9,9 +9,7 @@ export const AppRoutes = () => {
 
   const routes = publicRoutes;
 
-  console.log(publicRoutes, 'routes es');
-
-  const element = useRoutes([...standardRoute, ...routes]);
+  const element = useRoutes([...standardRoute, ...publicRoutes]);
 
   return element;
 };
