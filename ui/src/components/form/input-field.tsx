@@ -11,6 +11,7 @@ interface InputFieldProps {
   label?: string;
   placeholder?: string;
   error: FieldError | undefined;
+  htmlFor: string;
   registration: OptionalRegistrationExceptName;
 }
 
@@ -20,9 +21,10 @@ export const InputField = ({
   error,
   placeholder,
   registration,
+  htmlFor,
 }: InputFieldProps) => {
   return (
-    <FieldWrapper label={label} error={error}>
+    <FieldWrapper label={label} error={error} htmlFor={htmlFor}>
       <Controller
         {...registration}
         render={({ field }) => <Input type={type} placeholder={placeholder} {...field} />}

@@ -3,14 +3,15 @@ import { FormControl, FormLabel, InputGroup, Box } from '@chakra-ui/react';
 
 interface FieldWrapperProps {
   children: React.ReactNode;
-  label?: string;
   error: FieldError | undefined;
+  htmlFor: string;
+  label?: string;
 }
 
-export const FieldWrapper = ({ children, label, error }: FieldWrapperProps) => {
+export const FieldWrapper = ({ children, label, error, htmlFor }: FieldWrapperProps) => {
   return (
     <FormControl>
-      <FormLabel>
+      <FormLabel htmlFor={htmlFor}>
         {label}
         <InputGroup>{children}</InputGroup>
       </FormLabel>

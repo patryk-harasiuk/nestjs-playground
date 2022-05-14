@@ -5,6 +5,9 @@ module.exports = {
     public: { url: '/', resolve: true },
     src: '/dist',
   },
+  alias: {
+    '@': './src',
+  },
   plugins: [
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-typescript',

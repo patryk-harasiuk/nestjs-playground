@@ -1,7 +1,5 @@
-import { Register } from '../features/auth/routes/register';
-import { Routes, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
-import { Route } from 'react-router-dom';
 import { publicRoutes } from './public-routes';
 
 export const AppRoutes = () => {
@@ -9,7 +7,7 @@ export const AppRoutes = () => {
 
   const routes = publicRoutes;
 
-  const element = useRoutes([...standardRoute, ...publicRoutes]);
+  const element = useRoutes([...standardRoute, ...routes]);
 
   return element;
 };
