@@ -45,7 +45,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormInterface) => {
         error={errors.password}
       />
 
-      <Input type="submit" />
+      <Input type="submit" mt={8} />
     </Form>
   );
 };

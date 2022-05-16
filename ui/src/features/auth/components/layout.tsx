@@ -30,7 +30,7 @@ export const Layout = ({ title, subtitle, action, children }: LayoutProps) => {
             <HStack spacing={1} justify="center">
               <Text>{subtitle}</Text>
               <Button variant="link" colorScheme="blue">
-                <Link to={action === 'Sign up' ? '/auth/login' : '/auth/register'}>{action}</Link>
+                <Link to={action === 'Sign up' ? '/auth/register' : '/auth/login'}>{action}</Link>
               </Button>
             </HStack>
           </Stack>
