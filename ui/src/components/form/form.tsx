@@ -1,14 +1,10 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
 
 interface FormProps {
   children: React.ReactNode;
+  onSubmit: () => void;
 }
 
-export const Form = ({ children }: FormProps) => {
-  const { handleSubmit } = useForm();
-  const onSubmit = (data: any) => console.log(data);
-
-  return <form onSubmit={handleSubmit(onSubmit)}>{children}</form>;
+export const Form = ({ children, onSubmit }: FormProps) => {
+  return <form onSubmit={onSubmit}>{children}</form>;
 };

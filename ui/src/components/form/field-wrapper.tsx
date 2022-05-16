@@ -1,21 +1,24 @@
 import { FieldError } from 'react-hook-form';
-import { FormControl, FormLabel, InputGroup, Box } from '@chakra-ui/react';
+import { FormLabel, InputGroup, Box } from '@chakra-ui/react';
 
 interface FieldWrapperProps {
   children: React.ReactNode;
   error: FieldError | undefined;
-  htmlFor: string;
   label?: string;
 }
 
-export const FieldWrapper = ({ children, label, error, htmlFor }: FieldWrapperProps) => {
+export const FieldWrapper = ({ children, label, error }: FieldWrapperProps) => {
   return (
-    <FormControl>
-      <FormLabel htmlFor={htmlFor}>
+    <Box>
+      <FormLabel>
         {label}
         <InputGroup>{children}</InputGroup>
       </FormLabel>
-      {error?.message && <Box role="alert">{error.message}</Box>}
-    </FormControl>
+      {error && (
+        <Box role="alert" color="tomato">
+          {error?.message}
+        </Box>
+      )}
+    </Box>
   );
 };
