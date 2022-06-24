@@ -36,6 +36,7 @@ module.exports = {
         'plugin:jest-dom/recommended',
       ],
       rules: {
+        'react/react-in-jsx-scope': 'off',
         'no-restricted-imports': [
           'error',
           {
@@ -64,6 +65,7 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': ['off'],
         '@typescript-eslint/no-empty-function': ['off'],
         '@typescript-eslint/no-explicit-any': ['off'],
+        '@typescript-eslint/no-non-null-assertion': ['off'],
 
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       },

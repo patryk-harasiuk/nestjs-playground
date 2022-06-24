@@ -1,8 +1,9 @@
-import { Form, InputField } from '@/components/form';
 import { Input } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { Form, InputField } from '@/components/form';
 
 interface LoginFormInterface {
   onSuccess: () => void;
@@ -24,7 +25,10 @@ export const LoginForm = ({ onSuccess }: LoginFormInterface) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    onSuccess();
+    console.log(data);
+  };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <InputField

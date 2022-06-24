@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Container,
   Box,
@@ -10,6 +9,7 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 interface LayoutProps {

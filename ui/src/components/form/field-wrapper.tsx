@@ -1,5 +1,5 @@
-import { FieldError } from 'react-hook-form';
 import { FormLabel, InputGroup, Box } from '@chakra-ui/react';
+import { FieldError } from 'react-hook-form';
 
 interface FieldWrapperProps {
   children: React.ReactNode;

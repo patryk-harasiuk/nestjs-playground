@@ -1,8 +1,9 @@
-import { Form, InputField } from '@/components/form';
-import { Button, Input, Box } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { Input } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { Form, InputField } from '@/components/form';
 
 interface RegisterFormInterface {
   onSuccess: () => void;
@@ -18,7 +19,7 @@ const schema = yup
 
 export const RegisterForm = ({ onSuccess }: RegisterFormInterface) => {
   const {
-    control,
+    // control,
     handleSubmit,
     register,
     formState: { errors },
@@ -26,7 +27,10 @@ export const RegisterForm = ({ onSuccess }: RegisterFormInterface) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    onSuccess();
+    console.log(data);
+  };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <InputField

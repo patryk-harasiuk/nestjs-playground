@@ -1,6 +1,7 @@
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import { FieldWrapper } from './field-wrapper';
 import { Input } from '@chakra-ui/react';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+
+import { FieldWrapper } from './field-wrapper';
 
 interface InputFieldProps {
   type?: 'text' | 'password' | 'email';
