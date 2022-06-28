@@ -55,7 +55,8 @@
     "react-query": "^3.38.0",
     "react-query-auth": "^1.1.0",
     "react-router-dom": "^6.3.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "msw": {
     "workerDirectory": "public"
