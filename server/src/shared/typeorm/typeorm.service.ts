@@ -14,7 +14,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       port: this.config.get<number>('DATABASE_PORT'),
       database: this.config.get<string>('DATABASE_NAME'),
       username: this.config.get<string>('DATABASE_USER'),
-      password: this.config.get<string>('DATABASE_PASSWORD'),
+      password: this.config.get<string>('POSTGRES_PASSWORD'),
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'typeorm_migrations',
       autoLoadEntities: true,
