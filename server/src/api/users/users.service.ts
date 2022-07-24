@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { User } from './user.entity';
-import { UserProperties } from './user.interface';
+import { User } from './entities/user.entity';
+import { UserProperties } from './interfaces/user.interface';
 import * as bcrypt from 'bcryptjs';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
