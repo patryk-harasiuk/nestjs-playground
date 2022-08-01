@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UsersService } from 'src/api/users/users.service';
-import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { compare } from 'bcryptjs';
 import * as bcryptjs from 'bcryptjs';
 import { User } from 'src/api/users/entities/user.entity';
-import { Tokens } from './interfaces/auth.interface';
-import { LoginUserDto } from './dto/login-user.dto';
 import { UserProperties } from 'src/api/users/interfaces/user.interface';
+import { UsersService } from 'src/api/users/users.service';
 import { PostgresErrorCode } from 'src/shared/database';
+
+import { LoginUserDto } from './dto/login-user.dto';
+import { Tokens } from './interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -49,9 +50,12 @@ export class AuthService {
       this.createRefreshTokenCookie(userId, email),
     ]);
 
-    await this.usersService.updateUserRefreshToken(userId, refreshTokenCookie.refreshToken);
+    await this.usersService.updateUserRefreshToken(
+      userId,
+      refreshTokenCookie.refreshToken,
+    );
 
-    return { accessTokenCookie, refreshTokenCookie };
+    return { accessTokenCookie, refreshTokenCookie: refreshTokenCookie.cookie };
   }
 
   async validateUser(email: string, password: string) {

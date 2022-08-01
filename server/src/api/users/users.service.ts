@@ -1,10 +1,11 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { User } from './entities/user.entity';
-import { UserProperties } from './interfaces/user.interface';
+import { Injectable } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
+
+import { User } from './entities/user.entity';
+import { UserProperties } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
