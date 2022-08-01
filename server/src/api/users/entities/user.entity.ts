@@ -16,7 +16,8 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({ nullable: true, default: null, type: 'text' })
+  @Exclude()
   refreshToken: string | null;
 
   @Column({ default: true })

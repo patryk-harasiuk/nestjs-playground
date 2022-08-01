@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
 import { UserProperties } from './interfaces/user.interface';
@@ -12,7 +12,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private dataSource: DataSource,
   ) {}
 
   async create(user: UserProperties): Promise<User> {
@@ -65,12 +64,9 @@ export class UsersService {
   }
 
   async removeUserRefreshToken(userId: number) {
-    await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .update({ refreshToken: null })
-      .where('user.id = :id', { userId })
-      .execute();
+    return this.userRepository.update(userId, {
+      refreshToken: null
+    });
   }
 
   async remove(id: number): Promise<void> {
