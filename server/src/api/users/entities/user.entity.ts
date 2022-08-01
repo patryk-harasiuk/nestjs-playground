@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -13,6 +13,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true, type: 'text' })
+  refreshToken: string | null;
 
   @Column({ default: true })
   isActive: boolean;

@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UserProperties } from './interfaces/user.interface';
-import * as bcrypt from 'bcryptjs';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
 
@@ -16,48 +15,64 @@ export class UsersService {
   ) {}
 
   async create(user: UserProperties): Promise<User> {
-    if (await this.checkIsUserUnique(user.email)) {
+    const newUser = this.userRepository.create(user);
+
+    await this.userRepository.save(newUser);
+
+    return newUser;
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user)
       throw new HttpException(
-        { message: 'User with that email already exists' },
-        HttpStatus.BAD_REQUEST,
+        'User with this email does not exist',
+        HttpStatus.NOT_FOUND,
       );
-    }
 
-    const hashedPassword = await this.hashPassword(user.password);
-
-    return await this.userRepository.save({
-      ...user,
-      password: hashedPassword,
-    });
+    return user;
   }
 
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOne(email: string): Promise<User> {
+  findOneByEmail(email: string) {
     return this.userRepository.findOneBy({ email });
+  }
+
+  async findOneById(userId: number) {
+    const user = await this.userRepository.findOneBy({ id: userId });
+
+    if (!user)
+      throw new HttpException(
+        'User with this id does not exist',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return user;
+  }
+
+  async updateUserRefreshToken(
+    userId: number,
+    updatedRefreshToken: string,
+  ): Promise<void> {
+    await this.userRepository.update(userId, {
+      refreshToken: updatedRefreshToken,
+    });
+  }
+
+  async removeUserRefreshToken(userId: number) {
+    await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .update({ refreshToken: null })
+      .where('user.id = :id', { userId })
+      .execute();
   }
 
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
-  }
-
-  private async checkIsUserUnique(email: string): Promise<boolean> {
-    const user = await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .where('user.email = :email', { email })
-      .getOne();
-
-    return !!user;
-  }
-
-  private async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    return hashedPassword;
   }
 }
