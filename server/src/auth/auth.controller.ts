@@ -12,6 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { UsersService } from 'src/api/users/users.service';
 
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,7 +24,10 @@ import RequestWithUser from './interfaces/request-with-user.interface';
 @Controller('/auth')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UsersService,
+  ) {}
 
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
@@ -51,18 +55,26 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('/logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Req() req: RequestWithUser, @Res() response: Response) {
-    console.log('logout');
+  async logout(@Req() request: RequestWithUser, @Res() response: Response) {
+    const userId = request.user.id;
 
-    response.setHeader('Set-Cookie', this.authService.logout());
+    response.setHeader('Set-Cookie', await this.authService.logout(userId));
     return response.sendStatus(200);
   }
 
   @UseGuards(RefreshTokenGuard)
-  @Post('/refresh')
+  @Get('/refresh')
   @HttpCode(HttpStatus.OK)
-  async refreshToken(@Req() req) {
-    console.log('refresh token');
+  async refreshToken(@Req() request: RequestWithUser) {
+    const user = request.user;
+
+    const accessTokenCookie = await this.authService.createAccessTokenCookie(
+      user.id,
+      user.email,
+    );
+
+    request.res?.setHeader('Set-Cookie', accessTokenCookie);
+    return user;
   }
 
   @UseGuards(JwtAuthGuard)

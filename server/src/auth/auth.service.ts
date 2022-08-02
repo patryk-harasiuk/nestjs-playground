@@ -9,9 +9,6 @@ import { UserProperties } from 'src/api/users/interfaces/user.interface';
 import { UsersService } from 'src/api/users/users.service';
 import { PostgresErrorCode } from 'src/shared/database';
 
-import { LoginUserDto } from './dto/login-user.dto';
-import { Tokens } from './interfaces/auth.interface';
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -104,7 +101,7 @@ export class AuthService {
     return compare(password, hash);
   }
 
-  private async createAccessTokenCookie(
+  public async createAccessTokenCookie(
     userId: number,
     email: string,
   ): Promise<string> {
@@ -140,31 +137,12 @@ export class AuthService {
     };
   }
 
-  logout() {
-    // await this.usersService.removeUserRefreshToken(userId);
-    const clearedCookie = 'Authentication=; HttpOnly; Path=/; Max-Age=0';
+  public async logout(userId: number) {
+    await this.usersService.removeUserRefreshToken(userId);
+    const clearedAccessTokenCookie =
+      'Authentication=; HttpOnly; Path=/; Max-Age=0';
+    const clearedRefreshTokenCookie = 'Refresh=; HttpOnly; Path=/; Max-Age=0';
 
-    return clearedCookie;
+    return [clearedAccessTokenCookie, clearedRefreshTokenCookie];
   }
-  // async getAccessTokenFromRefreshToken(
-  //   userId: number,
-  //   refreshToken: string,
-  // ): Promise<Tokens> {
-  //   const user = await this.usersService.findOneById(userId);
-
-  //   if (!user || !user.refreshToken)
-  //     throw new ForbiddenException('Access Denied');
-
-  //   const isRefreshTokenOK = await bcryptjs.compare(
-  //     refreshToken,
-  //     user.refreshToken,
-  //   );
-
-  //   if (!isRefreshTokenOK) throw new ForbiddenException('Access Denied');
-
-  //   const tokens = await this.createTokensPair(userId, user.email);
-  //   await this.updateRefreshToken(userId, tokens.refresh_token);
-
-  //   return tokens;
-  // }
 }
