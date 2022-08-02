@@ -4,6 +4,7 @@ import { HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { Repository } from 'typeorm';
+import { UpdateResult } from 'typeorm';
 
 import { User } from './entities/user.entity';
 import { UserProperties } from './interfaces/user.interface';
@@ -15,7 +16,7 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(user: UserProperties): Promise<User> {
+  public async create(user: UserProperties): Promise<User> {
     const newUser = this.userRepository.create(user);
 
     await this.userRepository.save(newUser);
@@ -23,7 +24,7 @@ export class UsersService {
     return newUser;
   }
 
-  async getUserByEmail(email: string) {
+  public async getUserByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOneBy({ email });
 
     if (!user)
@@ -35,7 +36,7 @@ export class UsersService {
     return user;
   }
 
-  async getUserById(userId: number) {
+  public async getUserById(userId: number): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: userId });
 
     if (!user)
@@ -47,15 +48,23 @@ export class UsersService {
     return user;
   }
 
-  findAll(): Promise<User[]> {
+  public findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOneByEmail(email: string) {
-    return this.userRepository.findOneBy({ email });
+  public async findOneByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user)
+      throw new HttpException(
+        'User with that email does not exist',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return user;
   }
 
-  async findOneById(userId: number) {
+  public async findOneById(userId: number): Promise<User> {
     const user = await this.userRepository.findOneBy({ id: userId });
 
     if (!user)
@@ -67,7 +76,7 @@ export class UsersService {
     return user;
   }
 
-  async updateUserRefreshToken(
+  public async updateUserRefreshToken(
     userId: number,
     updatedRefreshToken: string,
   ): Promise<void> {
@@ -76,17 +85,20 @@ export class UsersService {
     });
   }
 
-  async removeUserRefreshToken(userId: number) {
+  public async removeUserRefreshToken(userId: number): Promise<UpdateResult> {
     return this.userRepository.update(userId, {
       refreshToken: null,
     });
   }
 
-  async remove(id: number): Promise<void> {
+  private async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }
 
-  async getUserIfRefreshTokenMatches(userId: number, refreshToken: string) {
+  public async getUserIfRefreshTokenMatches(
+    userId: number,
+    refreshToken: string,
+  ): Promise<User> {
     const user = await this.getUserById(userId);
 
     if (!user.refreshToken)
@@ -98,5 +110,7 @@ export class UsersService {
     );
 
     if (isRefreshTokenMatching) return user;
+
+    throw new HttpException('Access Denied', HttpStatus.BAD_REQUEST);
   }
 }
