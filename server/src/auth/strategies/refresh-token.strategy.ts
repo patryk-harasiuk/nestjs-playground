@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt } from 'passport-jwt';
-import { Strategy } from 'passport-local';
+import { Strategy } from 'passport-jwt';
 import { UsersService } from 'src/api/users/users.service';
 
 import { JwtPayload } from '../interfaces/auth.interface';
@@ -23,6 +23,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
           return request?.cookies?.Refresh;
         },
       ]),
+      ignoreExpiration: true,
       secretOrKey: configService.get<string>('REFRESH_TOKEN_SECRET'),
       passReqToCallback: true,
     });

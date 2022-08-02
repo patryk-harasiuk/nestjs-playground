@@ -14,7 +14,6 @@ async function bootstrap() {
       enableDebugMessages: true,
     }),
   );
-
   app.use(cookieParser());
 
   await app.listen(8080);

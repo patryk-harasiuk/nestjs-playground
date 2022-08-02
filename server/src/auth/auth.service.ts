@@ -2,7 +2,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { compare } from 'bcryptjs';
 import * as bcryptjs from 'bcryptjs';
 import { User } from 'src/api/users/entities/user.entity';
 import { UserProperties } from 'src/api/users/interfaces/user.interface';
@@ -47,10 +46,7 @@ export class AuthService {
       this.createRefreshTokenCookie(userId, email),
     ]);
 
-    await this.usersService.updateUserRefreshToken(
-      userId,
-      refreshTokenCookie.refreshToken,
-    );
+    await this.updateRefreshToken(userId, refreshTokenCookie.refreshToken);
 
     return { accessTokenCookie, refreshTokenCookie: refreshTokenCookie.cookie };
   }
@@ -98,7 +94,7 @@ export class AuthService {
 
   // Maybe move to some utils service
   private async validateHash(password: string, hash: string): Promise<boolean> {
-    return compare(password, hash);
+    return bcryptjs.compare(password, hash);
   }
 
   public async createAccessTokenCookie(

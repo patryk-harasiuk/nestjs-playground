@@ -64,7 +64,6 @@ export class AuthController {
 
   @UseGuards(RefreshTokenGuard)
   @Get('/refresh')
-  @HttpCode(HttpStatus.OK)
   async refreshToken(@Req() request: RequestWithUser) {
     const user = request.user;
 

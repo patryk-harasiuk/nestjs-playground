@@ -1,5 +1,6 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import {  Controller, Post, Req,UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 import { PostsService } from './posts.service';
 
@@ -7,9 +8,9 @@ import { PostsService } from './posts.service';
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  async create(@Body() post: any) {
+  async create(@Req() request: Request) {
     console.log('post created');
   }
 }
