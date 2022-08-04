@@ -1,6 +1,5 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 
 import { PostsService } from './posts.service';
 
@@ -10,7 +9,7 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  async create(@Req() request: Request) {
+  async create() {
     console.log('post created');
   }
 }

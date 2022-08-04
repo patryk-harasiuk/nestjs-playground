@@ -57,8 +57,7 @@ export class AuthService {
     return { accessTokenCookie, refreshTokenCookie: refreshTokenCookie.cookie };
   }
 
-  public async logout(userId: number): Promise<string[]> {
-    await this.usersService.removeUserRefreshToken(userId);
+  public logout(): string[] {
     const clearedAccessTokenCookie =
       'Authentication=; HttpOnly; Path=/; Max-Age=0';
     const clearedRefreshTokenCookie = 'Refresh=; HttpOnly; Path=/; Max-Age=0';
