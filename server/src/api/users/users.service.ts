@@ -13,47 +13,19 @@ import { UserProperties } from './interfaces/user.interface';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private usersRepository: Repository<User>,
   ) {}
 
   public async create(user: UserProperties): Promise<User> {
-    const newUser = this.userRepository.create(user);
+    const newUser = this.usersRepository.create(user);
 
-    await this.userRepository.save(newUser);
+    await this.usersRepository.save(newUser);
 
     return newUser;
   }
 
-  public async getUserByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ email });
-
-    if (!user)
-      throw new HttpException(
-        'User with this email does not exist',
-        HttpStatus.NOT_FOUND,
-      );
-
-    return user;
-  }
-
-  public async getUserById(userId: number): Promise<User> {
-    const user = await this.userRepository.findOneBy({ id: userId });
-
-    if (!user)
-      throw new HttpException(
-        'User with that id does not exist',
-        HttpStatus.NOT_FOUND,
-      );
-
-    return user;
-  }
-
-  public findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
   public async findOneByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ email });
+    const user = await this.usersRepository.findOneBy({ email });
 
     if (!user)
       throw new HttpException(
@@ -65,7 +37,7 @@ export class UsersService {
   }
 
   public async findOneById(userId: number): Promise<User> {
-    const user = await this.userRepository.findOneBy({ id: userId });
+    const user = await this.usersRepository.findOneBy({ id: userId });
 
     if (!user)
       throw new HttpException(
@@ -80,26 +52,22 @@ export class UsersService {
     userId: number,
     updatedRefreshToken: string,
   ): Promise<void> {
-    await this.userRepository.update(userId, {
+    await this.usersRepository.update(userId, {
       refreshToken: updatedRefreshToken,
     });
   }
 
   public async removeUserRefreshToken(userId: number): Promise<UpdateResult> {
-    return this.userRepository.update(userId, {
+    return this.usersRepository.update(userId, {
       refreshToken: null,
     });
-  }
-
-  private async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
   }
 
   public async getUserIfRefreshTokenMatches(
     userId: number,
     refreshToken: string,
   ): Promise<User> {
-    const user = await this.getUserById(userId);
+    const user = await this.findOneById(userId);
 
     if (!user.refreshToken)
       throw new HttpException('Access Denied', HttpStatus.BAD_REQUEST);

@@ -38,8 +38,8 @@ describe('AuthService', () => {
     it('should return a string', async () => {
       const userId = 1;
       const userEmail = 'test@test.com';
-     expect(
-        typeof await  authService.createAccessTokenCookie(userId, userEmail),
+      expect(
+        typeof (await authService.createAccessTokenCookie(userId, userEmail)),
       ).toEqual('string');
     });
   });
