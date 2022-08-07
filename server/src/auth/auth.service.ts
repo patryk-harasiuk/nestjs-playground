@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -127,9 +126,7 @@ export class AuthService {
       const isPasswordOk = await this.validateHash(password, user.password);
 
       if (isPasswordOk) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, refreshToken, ...result } = user;
-        return result;
+        return user;
       }
       throw new HttpException(
         'Wrong credentials provided',

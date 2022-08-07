@@ -3,3 +3,8 @@ export interface UserProperties {
   name: string;
   password: string;
 }
+
+export interface SanitizedUser extends UserProperties {
+  isActive: boolean;
+  id: number;
+}

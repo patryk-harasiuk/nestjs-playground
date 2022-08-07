@@ -19,9 +19,9 @@ export class UsersService {
   public async create(user: UserProperties): Promise<User> {
     const newUser = this.usersRepository.create(user);
 
-    await this.usersRepository.save(newUser);
+    const savedUser = await this.usersRepository.save(newUser);
 
-    return newUser;
+    return savedUser;
   }
 
   public async findOneByEmail(email: string): Promise<User> {
@@ -57,8 +57,8 @@ export class UsersService {
     });
   }
 
-  public async removeUserRefreshToken(userId: number): Promise<UpdateResult> {
-    return this.usersRepository.update(userId, {
+  public async removeUserRefreshToken(userId: number): Promise<void> {
+    this.usersRepository.update(userId, {
       refreshToken: null,
     });
   }
