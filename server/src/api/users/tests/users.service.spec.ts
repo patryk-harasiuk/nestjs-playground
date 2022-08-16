@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UsersRepositoryFake } from '../../utils/fakes';
-import { User } from './entities/user.entity';
-import { UserProperties } from './interfaces';
-import { UsersService } from './users.service';
+import { UsersRepositoryFake } from '../../../utils/fakes';
+import { User } from '../entities/user.entity';
+import { UserProperties } from '../interfaces';
+import { UsersService } from '../users.service';
 
 describe('UsersService', () => {
   let usersService: UsersService;
@@ -63,7 +63,7 @@ describe('UsersService', () => {
       const result = await usersService.create(createUserData);
 
       expect(usersRepositoryCreateSpy).toBeCalledWith(createUserData);
-      expect(result).toEqual(createUserData);
+      expect(result).toEqual(createdUserEntity);
     });
   });
 });

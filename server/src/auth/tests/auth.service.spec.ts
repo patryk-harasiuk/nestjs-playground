@@ -8,15 +8,15 @@ import { UsersService } from 'src/api/users/users.service';
 import { UsersRepositoryFake } from 'src/utils/fakes';
 import { Repository } from 'typeorm';
 
-import { User } from '../api/users/entities/user.entity';
+import { User } from '../../api/users/entities/user.entity';
 import {
   mockedConfigService,
   mockedJwtService,
   mockedUser,
   mockedUserRegisterData,
-} from '../utils/mocks';
-import { AuthService } from './auth.service';
-import { UserProperties } from './interfaces';
+} from '../../utils/mocks';
+import { AuthService } from '../auth.service';
+import { UserProperties } from '../interfaces';
 
 describe('AuthService', () => {
   let authService: AuthService;
