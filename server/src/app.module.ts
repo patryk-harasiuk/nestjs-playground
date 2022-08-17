@@ -8,10 +8,13 @@ import { UsersModule } from './api/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 
+console.log(process.env.NODE_ENV, 'MAIN APP MODULE');
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: './development.env',
+      envFilePath: ['./development.env',
+      //  './test.env'
+      ],
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),

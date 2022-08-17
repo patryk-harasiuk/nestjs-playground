@@ -15,17 +15,6 @@ services:
       - /app/node_modules
     depends_on: 
       - postgres
-    
-  frontend:
-    container_name: react-container
-    build: 
-      context: ./ui
-      dockerfile: ./Dockerfile
-    volumes:
-      - ./ui/:/app
-      - /app/node_modules
-    ports:
-      - 3000:3000
 
   postgres:
     container_name: postgres-container
