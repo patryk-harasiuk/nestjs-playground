@@ -8,8 +8,7 @@ export const defaultDBConfig: TypeOrmModuleOptions = {
   port: +configService.get('DATABASE_PORT'),
   host: configService.get('HOST'),
   username: configService.get('DATABASE_USER'),
-//   password:  configService.get<string>('POSTGRES_PASSWORD') || '',
-password: 'postgres',
+  password: configService.get<string>('POSTGRES_PASSWORD'),
   database: configService.get('DATABASE_NAME'),
   synchronize: true,
 };
