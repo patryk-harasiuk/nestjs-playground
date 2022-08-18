@@ -4,7 +4,6 @@ import { HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { Repository } from 'typeorm';
-import { UpdateResult } from 'typeorm';
 
 import { User } from './entities/user.entity';
 import { UserProperties } from './interfaces/user.interface';

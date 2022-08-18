@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
-import { User } from 'src/api/users/entities/user.entity';
-import { UsersService } from 'src/api/users/users.service';
-import { PostgresErrorCode } from 'src/shared/database';
 
+import { User } from '../api/users/entities';
+import { UsersService } from '../api/users/users.service';
+import { PostgresErrorCode } from '../shared/database';
 import {
   Cookies,
   RefreshTokenCookie,

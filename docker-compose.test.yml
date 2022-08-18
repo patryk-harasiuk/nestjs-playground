@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  postgres_test:
+    container_name: postgres-container-test
+    image: postgres:14.1-alpine
+    env_file:
+      - ./server/test.env
+    volumes:
+      - /var/lib/postgresql/data
+
+  backend_test:
+    container_name: nest-container-test
+    build: 
+      context: ./server
+      dockerfile: ./Dockerfile
+    ports:
+      - 8081:8080
+    env_file:
+      - ./server/test.env
+    volumes:
+      - ./server/:/app
+      - /app/node_modules
+    depends_on: 
+      - postgres_test

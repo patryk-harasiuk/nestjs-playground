@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
+import { JwtAuthGuard } from '../../auth/guards';
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
 
