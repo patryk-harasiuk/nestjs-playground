@@ -14,13 +14,9 @@ describe('Auth', () => {
   let userRepository: Repository<User>;
   let httpServer: unknown;
 
-
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [
-        AppModule,
-   TypeOrmModule.forFeature([User])
-      ],
+      imports: [AppModule, TypeOrmModule.forFeature([User])],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -31,21 +27,20 @@ describe('Auth', () => {
     await app.init();
   });
 
-
   afterEach(async () => {
     await userRepository.clear();
   });
 
   afterAll(async () => {
-      await app.close();
+    await app.close();
   });
 
   const registeredUserSnapshot = {
     id: expect.any(Number),
     isActive: expect.any(Boolean),
     email: expect.any(String),
-    name: expect.any(String)
-  }
+    name: expect.any(String),
+  };
 
   describe('POST /auth/register', () => {
     it('should return sanitized user object and create entity in database', async () => {
@@ -53,7 +48,7 @@ describe('Auth', () => {
         .post('/auth/register')
         .send(mockedUserRegisterData)
         .expect(201);
-        
+
       const id = response.body.id;
 
       expect(id).toBeDefined();
@@ -61,14 +56,21 @@ describe('Auth', () => {
     });
   });
 
-
   describe('POST /auth/register', () => {
     it('should give an error if user with that email already exists', async () => {
-        await request(httpServer).post('/auth/register').send(mockedUserRegisterData).expect(201);
+      await request(httpServer)
+        .post('/auth/register')
+        .send(mockedUserRegisterData)
+        .expect(201);
 
-        const secondResponse = await request(httpServer).post('/auth/register').send(mockedUserRegisterData).expect(400);
+      const secondResponse = await request(httpServer)
+        .post('/auth/register')
+        .send(mockedUserRegisterData)
+        .expect(400);
 
-        expect(secondResponse.body.message).toBe('User with that email already exists')
-    })
-  })
+      expect(secondResponse.body.message).toBe(
+        'User with that email already exists',
+      );
+    });
+  });
 });

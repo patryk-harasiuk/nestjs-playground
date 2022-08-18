@@ -12,8 +12,7 @@ console.log(`./${process.env.NODE_ENV}.env`, 'MAIN APP MODULE');
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: 
-        `./${process.env.NODE_ENV}.env`,
+      envFilePath: `./${process.env.NODE_ENV}.env`,
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
