@@ -9,13 +9,13 @@ services:
     volumes:
       - /var/lib/postgresql/data
 
-  backend:
-    container_name: nest-container
+  backend_test:
+    container_name: nest-container-test
     build: 
       context: ./server
       dockerfile: ./Dockerfile
     ports:
-      - 8080:8080
+      - 8081:8080
     env_file:
       - ./server/test.env
     volumes:
